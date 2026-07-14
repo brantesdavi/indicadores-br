@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: stg_indicadores_bcb
+    description: "Camada de stagin: dados dos indicadores do BCB organizados, sem calculos."
+    columns:
+      - name: data
+        description: "Data de referência do valor do indicador"
+
+      - name: valor
+        description: "Valor do indicador na data de referência"
+
+      - name: indicador
+        description: "Nome do indicador (selic, ipca, dolar, cdi)"
+
+  - name: mart_indicadores
+    description: "Camada de mart: indicadores econômicos do BCB con cálculo de variação mês a mês"
+    columns:
+      - name: valor_anterior
+        description: "Valor do periodo anterior do mesmo indicador (nulo na primeira ocorrencia de cada indicador)"
+
+      - name: variacao
+        description: "Variação percentual entre o valor atual e o anterior"
+
+      - name: indicador
+        description: "Nome do indicador econômico (selic, ipca, dolar, dci)"
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['selic', 'ipca', 'dolar', 'cdi']
+      - name: valor
+        tests:
+          - not_null

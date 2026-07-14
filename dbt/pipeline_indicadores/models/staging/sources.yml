@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Dados brutos extraídos via scripts Python, sem transformação"
+    schema: public
+    tables:
+      - name: raw_indicadores_bcb
+        description: "Indicadores econômicos extraídos da API SGS do Banco Central do Brasil"

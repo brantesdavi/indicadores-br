@@ -1,5 +1,5 @@
-select
+SELECT
     data,
     valor,
     indicador
-from raw_indicadores_bcb
+FROM {{ source('raw', 'raw_indicadores_bcb') }}
