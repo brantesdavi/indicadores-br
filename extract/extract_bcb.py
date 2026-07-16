@@ -1,16 +1,11 @@
 from datetime import datetime, timedelta
 import pandas as pd
 import requests
-from dotenv import load_dotenv
-import os
-from sqlalchemy import create_engine
+from db import get_engine
+from sqlalchemy import text
 
-load_dotenv()
-database_url = os.getenv("DATABASE_URL")
-engine = create_engine(database_url)
+engine = get_engine()
 
-with engine.connect() as conn:
-    print("Conectado com sucesso!")
 
 today = datetime.now()
 ten_yeras_ago = today - timedelta(days=3652)
@@ -60,7 +55,7 @@ df_final = pd.concat(list_dfs)
 print(df_final.shape)
 print(df_final['indicador'].value_counts())
 
-df_final.to_sql("raw_indicadores_bcb", engine, if_exists='replace', index=False)
+# df_final.to_sql("raw_indicadores_bcb", engine, if_exists='replace', index=False)
 
 # transforma a tabela em CSV
 
