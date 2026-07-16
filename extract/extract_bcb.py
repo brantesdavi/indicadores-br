@@ -55,7 +55,14 @@ df_final = pd.concat(list_dfs)
 print(df_final.shape)
 print(df_final['indicador'].value_counts())
 
-# df_final.to_sql("raw_indicadores_bcb", engine, if_exists='replace', index=False)
+
+# Usei TRUCATE + append tirando o raplace, porque a view stg_indicadores_bcb
+# do dbt depende da estrutura desta tabela
+with engine.begin() as conn:
+    conn.execute(text("TRUNCATE TABLE raw_indicadores_bcb"))
+
+df_final.to_sql("raw_indicadores_bcb", engine, if_exists='append', index=False)
+
 
 # transforma a tabela em CSV
 
